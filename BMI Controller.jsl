@@ -6,4 +6,4 @@ Note, bmi.py uses a user defined Python function library.
 
 Names Default to Here( 1 );
 
-Python Submit File("C:\Python\bmi.py");
+Python Submit File(".\bmi.py");
