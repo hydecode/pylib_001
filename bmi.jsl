@@ -1,0 +1,37 @@
+/*
+This example is a JSL script that calls Python
+JSL is used to open Big Class and create columns for BMI and Odd/Even
+The data table and number of rows are sent to Python
+
+The Python code imports a function library that contains odd_even and divide
+These functions are used to fill in the columns for BMI and Odd/Even
+*/
+
+Names Default To Here( 1 );
+
+dt = Open("$Sample_Data\Big Class.jmp");
+dt << New Column("BMI", Numeric, Continuous);
+dt << New Column("Odd/Even", Character, Nominal);
+dtnr = N Rows(dt);
+
+Python Send(dt);
+Python Send(dtnr);
+
+Python Submit("\[
+
+import jmp
+import sys
+
+# adding folder with python code to the system path
+sys.path.insert(1, '/Python/Function Libraries')
+# importing the odd_even and divide functions
+from library1 import odd_even, divide
+
+# dt was sent from JMP
+# dtnr was sent from JMP
+
+for j in range( int(dtnr) ):
+	dt['BMI'][j] = divide(dt['weight'][j], dt['height'][j])
+	dt['Odd/Even'][j] = odd_even(dt['age'][j])
+	
+]\")

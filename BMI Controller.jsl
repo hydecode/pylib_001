@@ -1,0 +1,9 @@
+/*
+This example is a JSL script that calls Python code by Python Submit File().
+In this case, all the python code in bmi.py is executed.
+Note, bmi.py uses a user defined Python function library.
+*/
+
+Names Default to Here( 1 );
+
+Python Submit File("C:\Python\bmi.py");
